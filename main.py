@@ -34,7 +34,7 @@ for i in range(1,len(temp_list)):
     Radius.append(temp_list[i][6])
     index.append(i)
     
-df2 = pd.DataFrame(list(zip(index,Star_names,Distance,Mass,Radius)),columns=["Serial No.",'Star_name','Distance','Mass','Radius'])
-print(df2)
+df = pd.DataFrame(list(zip(index,Star_names,Distance,Mass,Radius)),columns=["Serial No.",'Star_name','Distance','Mass','Radius'])
+print(df)
 
-df2.to_csv('data.csv')
+df.to_csv('2.csv')
