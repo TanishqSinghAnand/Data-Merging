@@ -3,38 +3,52 @@ import requests
 import pandas as pd
 
 
-bright_stars_url = 'https://en.wikipedia.org/wiki/List_of_brightest_stars_and_other_record_stars'
+url = 'https://en.wikipedia.org/wiki/List_of_brown_dwarfs'
 
-page = requests.get(bright_stars_url,verify=False)
+page = requests.get(url)
 print(page)
 
-soup = bs(page.text,'html.parser')
+soup = bs(page.text, 'html.parser')
 
-star_table = soup.find('table')
+star_table = soup.find_all('table')
+print(len(star_table))
 
-temp_list= []
-table_rows = star_table.find_all('tr')
+
+temp_list = []
+table_rows = star_table[4].find_all('tr')
 for tr in table_rows:
     td = tr.find_all('td')
     row = [i.text.rstrip() for i in td]
     temp_list.append(row)
-
+print(temp_list)
 
 
 Star_names = []
-Distance =[]
+Distance = []
 Mass = []
-Radius =[]
-index = []
+Radius = []
 
-for i in range(1,len(temp_list)):
-    Star_names.append(temp_list[i][1])
-    Distance.append(temp_list[i][3])
-    Mass.append(temp_list[i][5])
-    Radius.append(temp_list[i][6])
-    index.append(i)
+
+for i in range(1, len(temp_list)):
     
-df = pd.DataFrame(list(zip(index,Star_names,Distance,Mass,Radius)),columns=["Serial No.",'Star_name','Distance','Mass','Radius'])
-print(df)
+    Star_names.append(temp_list[i][0])
+    try:
+        Distance.append(float(temp_list[i][5]))
+    except:
+        pass
+    try:
+        Mass.append(float(temp_list[i][7]))
+    except:
+        pass
+    try:
+        Radius.append(float(temp_list[i][8]))
+    except:
+        pass
+
+df = pd.DataFrame(list(zip(Star_names, Distance, Mass, Radius,)), columns=[
+                   'Star_name', 'Distance', 'Mass', 'Radius'])
+# print(df)
 
 df.to_csv('2.csv')
+df = df.dropna()
+print('\n \n ', df.dtypes)
