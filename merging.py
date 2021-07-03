@@ -24,6 +24,6 @@ print(df.columns)
 # print(df.head())
 df.reset_index(drop=True, inplace=True)
 
-df.to_csv("unit_converted_stars.csv")
+df.to_csv("merged.csv")
 
 print(df.dtypes)
