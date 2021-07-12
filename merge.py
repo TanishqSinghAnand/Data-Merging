@@ -33,6 +33,3 @@ with open("total_stars.csv", 'w', encoding='utf8') as f:
     csvwriter = csv.writer(f)
     csvwriter.writerow(h)
     csvwriter.writerows(p_d)
-
-df = pd.read_csv('data.csv')
-df.tail(8)
